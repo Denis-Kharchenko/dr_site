@@ -378,6 +378,8 @@
   // Гитара (синтез Карплуса — Стронга)
   var AC = null, cache = {};
   function ctx() {
+    // iPhone в беззвучном режиме глушит Web Audio без этого
+    if (navigator.audioSession) { try { navigator.audioSession.type = 'playback'; } catch (e) {} }
     if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
     if (AC.state === 'suspended') AC.resume();
     return AC;

@@ -97,6 +97,7 @@ section { padding: 72px 0; position: relative; }
   background: rgba(0,0,0,.55);
   opacity: 0; transition: opacity .3s;
 }
+.gift-modal[hidden] { display: none; }
 .gift-modal.show { opacity: 1; }
 .gift-card {
   width: min(460px, 100%); text-align: center; padding: 36px 24px 28px;
