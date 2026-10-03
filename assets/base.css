@@ -11,7 +11,7 @@ body {
 }
 body.leaving { opacity: 0; }
 img, svg { display: block; max-width: 100%; }
-button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; touch-action: manipulation; }
+button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; }
 a { color: inherit; }
 :focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
 

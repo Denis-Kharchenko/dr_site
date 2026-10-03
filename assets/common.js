@@ -219,7 +219,6 @@
         setTimeout(function () { close.focus(); }, 400);
       }
     }
-    if (navigator.vibrate) navigator.vibrate([80, 60, 80, 60, 200]);
     fireworks(opts && opts.colors);
   }
 
@@ -292,11 +291,6 @@
       launch();
       setTimeout(auto, reduce ? 2200 : 450 + Math.random() * 700);
     })();
-    // тап по экрану = свой залп
-    addEventListener('pointerdown', function (e) {
-      if (e.target.closest('a,button')) return;
-      launch(e.clientX, e.clientY);
-    });
     return { launch: launch };
   }
 

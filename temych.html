@@ -208,7 +208,7 @@
     <div>
       <span class="kicker reveal">Интерактив</span>
       <h2 class="reveal">Сыграй Темычу</h2>
-      <p class="lead reveal">Проведи пальцем по струнам или нажми на кнопку. Звук включи 🔊</p>
+      <p class="lead reveal">Нажми на струну или на аккорд. Звук включи 🔊</p>
       <div class="guitar reveal" id="guitar" role="group" aria-label="Гитарные струны">
         <span class="fret" style="left:22%" aria-hidden="true"></span>
         <span class="fret" style="left:48%" aria-hidden="true"></span>
@@ -417,8 +417,7 @@
     b.style.setProperty('--t', s.t + 'px');
     b.setAttribute('aria-label', 'Струна ' + (i + 1) + ', ' + s.n);
     b.innerHTML = '<span>' + s.n + '</span>';
-    b.addEventListener('pointerdown', function () { play(i, s.f); });
-    b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(i, s.f); } });
+    b.addEventListener('click', function () { play(i, s.f); });
     guitar.appendChild(b);
     return b;
   });
@@ -427,17 +426,6 @@
     b.classList.remove('pluck'); void b.offsetWidth; b.classList.add('pluck');
   }
   function play(i, f) { pluck(f); shake(i); }
-  // провести пальцем по струнам
-  var last = -1;
-  guitar.addEventListener('pointermove', function (e) {
-    if (e.pointerType === 'mouse' && e.buttons !== 1) return;
-    var el = document.elementFromPoint(e.clientX, e.clientY);
-    var b = el && el.closest('.string');
-    var i = strings.indexOf(b);
-    if (i >= 0 && i !== last) { last = i; play(i, STR[i].f); }
-  });
-  guitar.addEventListener('pointerup', function () { last = -1; });
-  guitar.style.touchAction = 'pan-y';
 
   // аккорды: частоты снизу вверх (6-я → 1-я), null — струна не звучит
   var CH = {
