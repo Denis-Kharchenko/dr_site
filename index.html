@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Два дня рождения</title>
+<meta name="description" content="Подарок для Темыча и Машули">
+<meta name="theme-color" content="#0b1d33">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%81%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Rubik+Mono+One&family=Rubik:wght@400;600;800&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sea: #0b1d33;
+    --sea-2: #12345a;
+    --straw: #f6c445;
+    --red: #e23d3d;
+    --cream: #f7efe6;
+    --ink: #141012;
+    --pink: #e8467c;
+    --blush: #f6c9d3;
+    --gold: #c9a45c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--ink);
+    color: #fff;
+    font-family: Rubik, system-ui, sans-serif;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .split {
+    display: flex;
+    height: 100dvh;
+    min-height: 100vh;
+  }
+  @supports (height: 100dvh) { .split { min-height: 0; } }
+
+  .side {
+    position: relative;
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 24px 16px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: flex-grow .5s cubic-bezier(.2,.8,.2,1), filter .3s;
+    touch-action: manipulation;
+    isolation: isolate;
+  }
+  .side:focus-visible { outline: 4px solid #fff; outline-offset: -8px; }
+
+  /* ----- ТЕМЫЧ ----- */
+  .tema {
+    background:
+      radial-gradient(circle at 70% 22%, rgba(246,196,69,.35), transparent 22%),
+      linear-gradient(180deg, #0f2b4a 0%, var(--sea) 70%);
+  }
+  .tema .sun {
+    position: absolute; top: 14%; right: 18%;
+    width: 90px; height: 90px; border-radius: 50%;
+    background: radial-gradient(circle, #ffe08a, var(--straw) 60%, #f09a2b);
+    box-shadow: 0 0 80px 20px rgba(246,196,69,.35);
+    z-index: -1;
+    animation: bob 6s ease-in-out infinite;
+  }
+  .waves { position: absolute; left: 0; right: 0; bottom: 0; height: 34%; z-index: -1; }
+  .waves svg { position: absolute; bottom: 0; width: 200%; height: 100%; }
+  .waves .w1 { animation: drift 9s linear infinite; opacity: .55; }
+  .waves .w2 { animation: drift 6s linear infinite reverse; bottom: -14px; }
+  .ship {
+    position: absolute; bottom: 24%; left: 10%; width: 70px; z-index: -1;
+    animation: sail 7s ease-in-out infinite;
+  }
+  .tema .btn {
+    font-family: 'Rubik Mono One', Rubik, sans-serif;
+    font-size: clamp(40px, 9vw, 104px);
+    letter-spacing: .02em;
+    color: var(--straw);
+    text-shadow: 4px 4px 0 var(--red), 8px 8px 0 rgba(0,0,0,.35);
+    transform: rotate(-3deg);
+  }
+  .tema .tag { color: #cfe3ff; }
+
+  /* ----- МАШУЛЯ ----- */
+  .masha {
+    background:
+      radial-gradient(circle at 30% 80%, rgba(232,70,124,.25), transparent 40%),
+      linear-gradient(160deg, #fbf5ef 0%, var(--blush) 120%);
+    color: var(--ink);
+  }
+  .masha .btn {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 900;
+    font-size: clamp(44px, 9.5vw, 116px);
+    letter-spacing: -.02em;
+    line-height: 1;
+    background: linear-gradient(100deg, var(--ink) 30%, var(--pink) 50%, var(--ink) 70%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+    animation: shine 5s ease-in-out infinite;
+  }
+  .masha .tag { color: #6d3b4c; font-family: Montserrat, sans-serif; }
+  .mag-top {
+    position: absolute; top: 22px; left: 0; right: 0;
+    display: flex; justify-content: space-between; padding: 0 22px;
+    font: 700 11px/1 Montserrat, sans-serif; letter-spacing: .25em; color: #6d3b4c;
+  }
+  .sparkle {
+    position: absolute; width: 14px; height: 14px; z-index: -1;
+    background: var(--gold);
+    clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+    animation: twinkle 3s ease-in-out infinite;
+  }
+
+  .tag {
+    font-size: 13px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+    text-align: center;
+  }
+  .cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 44px; padding: 10px 20px; border-radius: 999px;
+    font: 700 14px/1 Montserrat, sans-serif; letter-spacing: .08em; text-transform: uppercase;
+    transition: transform .2s, background .2s;
+  }
+  .tema .cta { background: var(--straw); color: var(--sea); }
+  .masha .cta { background: var(--ink); color: #fff; }
+  .side:hover .cta, .side:focus-visible .cta { transform: translateY(-2px) scale(1.04); }
+  .side:active .cta { transform: scale(.96); }
+
+  /* центр */
+  .center {
+    position: absolute; left: 50%; top: 50%; z-index: 5;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    display: grid; place-items: center;
+  }
+  .badge {
+    width: 120px; height: 120px; border-radius: 50%;
+    display: grid; place-items: center; text-align: center;
+    background: #fff; color: var(--ink);
+    font: 900 15px/1.1 Rubik, sans-serif; text-transform: uppercase; letter-spacing: .04em;
+    box-shadow: 0 10px 40px rgba(0,0,0,.35);
+    animation: spin 18s linear infinite;
+  }
+  .badge-ring { position: absolute; inset: 0; }
+  .badge-ring text { font: 700 10.5px Montserrat, sans-serif; letter-spacing: .32em; fill: var(--ink); }
+  .badge b {
+    position: absolute; font-size: 34px; animation: spin 18s linear infinite reverse;
+  }
+
+  .dates {
+    position: fixed; left: 50%; bottom: max(16px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    z-index: 6; display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
+    width: calc(100% - 32px); pointer-events: none;
+  }
+  .dates span {
+    font: 700 11px/1 Montserrat, sans-serif; letter-spacing: .12em; text-transform: uppercase;
+    padding: 8px 12px; border-radius: 999px;
+    background: rgba(20,16,18,.82); color: #fff; backdrop-filter: blur(6px);
+  }
+  .dates span:last-child { background: var(--pink); }
+
+  /* Заставка-шторка при переходе */
+  body.leaving .side { filter: brightness(1.15); }
+  body.leaving .side.go { flex-grow: 30; }
+  body.leaving .center, body.leaving .dates { opacity: 0; transition: opacity .2s; }
+
+  @media (hover: hover) and (min-width: 769px) {
+    .side:hover { flex-grow: 1.6; }
+  }
+  @media (max-width: 768px) {
+    .split { flex-direction: column; }
+    .tema .btn { font-size: clamp(40px, 13vw, 72px); }
+    .masha .btn { font-size: clamp(46px, 15vw, 84px); }
+    .side { gap: 12px; padding-bottom: 40px; }
+    .masha { padding-top: 64px; padding-bottom: 76px; }
+    .badge { width: 96px; height: 96px; }
+    .badge b { font-size: 26px; }
+    .ship { width: 54px; bottom: 18%; }
+    .tema .sun { width: 64px; height: 64px; top: 12%; right: 10%; }
+  }
+
+  @keyframes drift { to { transform: translateX(-50%); } }
+  @keyframes bob { 50% { transform: translateY(10px); } }
+  @keyframes sail { 50% { transform: translate(30px, -6px) rotate(4deg); } }
+  @keyframes shine { 50% { background-position: 0 0; } 0%, 100% { background-position: 100% 0; } }
+  @keyframes twinkle { 50% { transform: scale(.3) rotate(45deg); opacity: .4; } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes rise { from { opacity: 0; transform: translateY(30px); } }
+  .btn, .tag, .cta { animation-name: rise; animation-duration: .8s; animation-fill-mode: both; animation-timing-function: cubic-bezier(.2,.8,.2,1); }
+  .tema .btn { animation: rise .8s .1s both cubic-bezier(.2,.8,.2,1); }
+  .masha .btn { animation: rise .8s .25s both cubic-bezier(.2,.8,.2,1), shine 5s 1.2s ease-in-out infinite; }
+  .tag { animation-delay: .35s; }
+  .cta { animation-delay: .5s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<main class="split">
+  <a class="side tema" href="temych.html" data-go aria-label="Открыть страницу Темыча">
+    <span class="sun" aria-hidden="true"></span>
+    <svg class="ship" viewBox="0 0 80 64" aria-hidden="true">
+      <path d="M38 4v40" stroke="#f7efe6" stroke-width="3"/>
+      <path d="M40 8c16 4 22 14 22 26H40z" fill="#f7efe6"/>
+      <path d="M36 12c-12 4-18 12-18 22h18z" fill="#e8dcc6"/>
+      <circle cx="51" cy="24" r="5" fill="#141012"/>
+      <path d="M38 4h12l-4 4 4 4H38z" fill="#e23d3d"/>
+      <path d="M6 44h68l-10 14H16z" fill="#7a4a24"/>
+    </svg>
+    <div class="waves" aria-hidden="true">
+      <svg class="w1" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0 60 Q75 20 150 60 T300 60 T450 60 T600 60 T750 60 T900 60 T1050 60 T1200 60 V120 H0z" fill="#1f5f99"/></svg>
+      <svg class="w2" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0 70 Q75 40 150 70 T300 70 T450 70 T600 70 T750 70 T900 70 T1050 70 T1200 70 V120 H0z" fill="#12345a"/></svg>
+    </div>
+    <span class="tag">Капитан · 26 лет · 4 октября</span>
+    <span class="btn">ТЕМЫЧ</span>
+    <span class="cta">На борт →</span>
+  </a>
+
+  <a class="side masha" href="masha.html" data-go aria-label="Открыть страницу Машули">
+    <div class="mag-top" aria-hidden="true"><span>№ 22</span><span>OCT 2026</span></div>
+    <span class="sparkle" style="top:28%;left:16%" aria-hidden="true"></span>
+    <span class="sparkle" style="top:62%;right:14%;animation-delay:1s;width:20px;height:20px" aria-hidden="true"></span>
+    <span class="sparkle" style="bottom:20%;left:30%;animation-delay:2s" aria-hidden="true"></span>
+    <span class="tag">Спецвыпуск · 22 года · 2 октября</span>
+    <span class="btn">МАШУЛЯ</span>
+    <span class="cta">Открыть номер →</span>
+  </a>
+</main>
+
+<div class="center" aria-hidden="true">
+  <div class="badge">
+    <svg class="badge-ring" viewBox="0 0 120 120">
+      <defs><path id="ring" d="M60 60 m-46 0 a46 46 0 1 1 92 0 a46 46 0 1 1 -92 0"/></defs>
+      <text><textPath href="#ring">С ДНЁМ РОЖДЕНИЯ · С ДНЁМ РОЖДЕНИЯ ·</textPath></text>
+    </svg>
+    <b>🎁</b>
+  </div>
+</div>
+
+<div class="dates" aria-label="Даты">
+  <span>2.10 — Маша</span>
+  <span>4.10 — Тёма</span>
+  <span>5.10 · 20:00 — сюрприз</span>
+</div>
+
+<script src="assets/common.js"></script>
+<script>
+  document.querySelectorAll('.side').forEach(function (s) {
+    s.addEventListener('click', function () { s.classList.add('go'); });
+  });
+</script>
+</body>
+</html>

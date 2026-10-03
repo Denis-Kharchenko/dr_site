@@ -1,0 +1,118 @@
+/* Общая база: сброс, появление, диаграммы, модалка подарка, фейерверк */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  min-height: 100vh;
+  line-height: 1.6;
+  font-size: 17px;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity .35s ease;
+}
+body.leaving { opacity: 0; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; touch-action: manipulation; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+
+.wrap { width: min(1100px, 100% - 32px); margin-inline: auto; }
+section { padding: 72px 0; position: relative; }
+@media (min-width: 769px) { section { padding: 110px 0; } }
+
+/* Появление */
+.reveal { opacity: 0; transform: translateY(36px); transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: .1s; } .reveal.d2 { transition-delay: .2s; } .reveal.d3 { transition-delay: .3s; }
+
+/* Кнопка «назад» */
+.home {
+  position: fixed; z-index: 50;
+  top: max(12px, env(safe-area-inset-top)); left: 12px;
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 44px; padding: 0 16px; border-radius: 999px;
+  font-size: 14px; font-weight: 700; text-decoration: none;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  transition: transform .2s;
+}
+.home:active { transform: scale(.95); }
+
+/* Кольцевая диаграмма */
+.donut { display: grid; gap: 28px; align-items: center; }
+@media (min-width: 769px) { .donut { grid-template-columns: 300px 1fr; gap: 48px; } }
+.donut-chart { position: relative; width: min(300px, 80vw); margin-inline: auto; }
+.donut-seg { transition: stroke-dasharray 1.2s cubic-bezier(.2,.8,.2,1), opacity .3s; }
+.donut-seg.dim { opacity: .18; }
+.donut-center {
+  position: absolute; inset: 0; display: grid; place-content: center; text-align: center;
+  padding: 0 70px; line-height: 1.15;
+}
+.donut-center b { font-size: 34px; }
+.donut-center span { font-size: 13px; opacity: .8; }
+.legend { list-style: none; display: grid; gap: 6px; }
+.legend button {
+  width: 100%; min-height: 48px; display: flex; align-items: center; gap: 12px;
+  padding: 8px 14px; border-radius: 12px; text-align: left;
+  transition: background .2s, transform .2s;
+}
+.legend button:active { transform: scale(.98); }
+.legend i { width: 16px; height: 16px; border-radius: 4px; flex: none; }
+.legend .lg-label { flex: 1; }
+.legend .lg-val { font-variant-numeric: tabular-nums; font-weight: 800; }
+
+/* Радар */
+.radar { width: min(460px, 100%); margin-inline: auto; overflow: visible; padding: 0 6px; }
+.radar-data { transform: scale(0); transition: transform 1.2s cubic-bezier(.3,1.5,.5,1); }
+.radar.in .radar-data { transform: scale(1); }
+.radar-label { font-size: 14px; font-weight: 700; }
+
+/* Горизонтальные бары */
+.bars { display: grid; gap: 16px; }
+.bar-row { display: grid; gap: 6px; }
+.bar-head { display: flex; justify-content: space-between; gap: 12px; font-weight: 700; }
+.bar-head span:last-child { font-variant-numeric: tabular-nums; }
+.bar-track { height: 18px; border-radius: 999px; overflow: hidden; }
+.bar-fill {
+  height: 100%; border-radius: inherit;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 1.3s cubic-bezier(.2,.8,.2,1);
+}
+.reveal.in .bar-fill { transform: scaleX(var(--v)); }
+.bar-row:nth-child(2) .bar-fill { transition-delay: .1s; }
+.bar-row:nth-child(3) .bar-fill { transition-delay: .2s; }
+.bar-row:nth-child(4) .bar-fill { transition-delay: .3s; }
+.bar-row:nth-child(5) .bar-fill { transition-delay: .4s; }
+.bar-row:nth-child(6) .bar-fill { transition-delay: .5s; }
+
+/* Таймер */
+.cd { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.cd-cell { text-align: center; }
+.cd-num { display: block; font-variant-numeric: tabular-nums; }
+.cd-num.flip { animation: flip .45s cubic-bezier(.2,.8,.2,1); }
+@keyframes flip { from { transform: translateY(-30%) scale(.9); opacity: .2; } }
+
+/* Модалка подарка */
+.gift-modal {
+  position: fixed; inset: 0; z-index: 90;
+  display: grid; place-items: center; padding: 16px;
+  background: rgba(0,0,0,.55);
+  opacity: 0; transition: opacity .3s;
+}
+.gift-modal.show { opacity: 1; }
+.gift-card {
+  width: min(460px, 100%); text-align: center; padding: 36px 24px 28px;
+  transform: scale(.7) rotate(-4deg); transition: transform .6s cubic-bezier(.3,1.6,.5,1);
+}
+.gift-modal.show .gift-card { transform: none; }
+.gift-card .big { font-size: 72px; line-height: 1; animation: wiggle 1.2s ease-in-out infinite; display: inline-block; }
+@keyframes wiggle { 25% { transform: rotate(-10deg) scale(1.1); } 75% { transform: rotate(10deg) scale(1.1); } }
+.gift-card button { margin-top: 20px; min-height: 48px; padding: 0 28px; border-radius: 999px; font-weight: 800; }
+
+.fw-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 80; pointer-events: none; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
